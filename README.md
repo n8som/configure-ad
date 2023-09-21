@@ -68,7 +68,10 @@ This tutorial outlines the implementation of on-premises Active Directory within
 <br />
 
 <p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+<h3>Step 4: Create an Admin and Normal User Account in AD</h3>
+
+  Go to Active Directory Users and Computers (ADUC) under tools. Create an Organizational Unit (OU) called "_EMPLOYEES" and "_ADMINS". Create a new employee, for example, Jane Doe with the username jane_admin. Add jane_admin to the "Domain Admins" Security Group. Log out of the Remote Desktop connection and log back in as "mydomain.com\jane_admin". Use jane_admin as your admin account from now on. 
+  
 </p>
 <p>
 <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
@@ -76,7 +79,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 <br />
 
 <p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+<h3>Step 5: Join Client-1 to Your Domain (mydomain.com)</h3>
+
+  From the Azure Portal, set Client-1's DNS settings to the DC's Private IP address. Restart Client-1 from the portal. Next, log in to Client-1 via Remote Desktop as the original local admin (labuser) and join it to the domain. The computer will restart. Log in to the Domain Controller and verify Client-1 shows up in ADUC inside the "Computers" container on the root of the domain. Create a new OU named "_CLIENTS" and drag Client-1 into there. This isn't really necessary, just for organizational purposes. 
+  
 </p>
 <p>
 <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
@@ -84,7 +90,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 <br />
 
 <p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+<h3>Step 6: Setup Remote Desktop for Non-Administrative Users on Client-1</h3>
+
+  Log into Client-1 as mydomain.com\jane_admin and open system properties. Click on "Remote Desktop" and allow "Domain Users" access to remote desktop. After that, you should be able to log into Client-1 as a normal, non-administrative user now. Normally you'd want to do this with Group Policy that allows you to change many systems at once.
+  
 </p>
 <p>
 <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
@@ -92,7 +101,12 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 <br />
 
 <p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+<h3>Step 7: Create a Bunch of Additional Users and Attempt To Log Into Client-1 With One of The Users</h3>
+
+  First log in to DC-1 as jane_admin. Open PowerShell ISE as an administrator. Create a new File and paste the contents of this script into it, https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1 
+
+  Run the script and observe the accounts being created. You can reduce the number accounts being created to what you'd prefer, like 1000. When finished, open ADUC and observe the accounts in the appropriate OU. Attempt to log into Client-1 with one of the accounts, the password for any of the accounts will be Password1.
+  
 </p>
 <p>
 <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
@@ -100,7 +114,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 <br />
 
 <p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Congrats, you're all done!
 </p>
 <p>
 <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
